@@ -1010,9 +1010,19 @@ const preparedInput = input.split("\n").map((row) => {
 const sortedList1 = list1.sort((a, b) => a - b);
 const sortedList2 = list2.sort((a, b) => a - b);
 
-const diffList: number = sortedList1.reduce((acc, curr, index) => {
-  const currentDiff = Math.abs(curr - sortedList2[index]);
-  return acc + currentDiff;
+const currentLookingIndex = 0;
+
+const similarityScore = sortedList1.reduce((acc, curr, index) => {
+  let amountFound = 0;
+  for (let i = currentLookingIndex; i < sortedList2.length; i++) {
+    if (sortedList2[i] > curr) break;
+    if (sortedList2[i] === curr) {
+      amountFound++;
+    }
+  }
+  return acc + amountFound * curr;
 }, 0);
 
-console.log("diffList", diffList);
+console.log("similarityScore", similarityScore);
+
+export {};
